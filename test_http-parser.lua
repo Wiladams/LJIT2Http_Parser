@@ -1,4 +1,3 @@
-package.path = package.path..";..\\HeadsUp\\core\\?.lua;..\\HeadsUp\\core\\win32\\?.lua";
 
 local ffi = require "ffi"
 local bit = require "bit"
@@ -46,15 +45,18 @@ function isbitset(value, bit)
 end
 
 function test_parse_url_raw()
-	local url,len = lstringdup("http://www.microsoft.com:90/foo.html")
+	local url,len = lstringdup("http://www.gooly.com:8081/foo/bar/baz/file.html?filename=santaclaws")
+	--local url,len = lstringdup("http://www.microsoft.com:90/foo.html")
+	--local url,len = lstringdup("hostname:443")
+
 
 	local u = ffi.new("struct http_parser_url")
 
-	local res = http_parser.http_parser_parse_url(url, len, 0, u);
+	local res = http_parser_parse_url(url, len, false, u);
 
 	print("result: ", res);
 
-	if res == 0 then
+	if true then
 		print("port: ", u.port);
 		for i = 0,UF_FRAGMENT do
 			local havefield = isbitset(u.field_set, i)
@@ -81,6 +83,19 @@ function test_parse_url()
 	end
 end
 
+require "strtoul"
+
+function test_strtol()
+	local str,len = lstringdup("12345");
+
+	local val = strtol(str, nil, 10)
+
+	print(val)
+end
+
+
 test_parse_url_raw();
 
-test_parse_url();
+--test_parse_url();
+
+--test_strtol();

@@ -45,7 +45,8 @@ function isbitset(value, bit)
 end
 
 function test_parse_url_raw()
-	local url,len = lstringdup("http://www.gooly.com:8081/foo/bar/baz/file.html?filename=santaclaws")
+	local url,len = lstringdup("udp://192.168.1.1:80/")
+	--local url,len = lstringdup("http://www.gooly.com:8081/foo/bar/baz/file.html?filename=santaclaws")
 	--local url,len = lstringdup("http://www.microsoft.com:90/foo.html")
 	--local url,len = lstringdup("hostname:443")
 

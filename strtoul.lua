@@ -22,7 +22,7 @@ local LONG_MIN  = 0x80000000;
 local LONG_MAX  = 0x7FFFFFFF;
 local ULONG_MAX = 0xFFFFFFFF;
 
-
+require "cctype"
 
 --[[
 /*

@@ -981,8 +981,7 @@ http_parser_settings = nil
 http_parser_settings_mt = {
 	__index = {
 		new = function()
-			local newone = ffi.cast("struct http_parser_settings *", ffi.new("uint8_t[?]", ffi.sizeof("http_parser_settings")));
-
+			local newone = ffi.new("struct http_parser_settings");
 			return newone;
 		end;
 	};
@@ -993,9 +992,10 @@ http_parser_settings = ffi.metatype("http_parser_settings", http_parser_settings
 http_parser = nil
 http_parser_mt = {
 	__index = {
-		new = function()
-			local parser = ffi.cast("struct http_parser *", ffi.new("char *",ffi.sizeof("struct http_parser")))
-			return parser;
+		new = function(parser_type)
+			local newone = ffi.new("struct http_parser")
+			newone:init(parser_type);
+			return newone;
 		end;
 
 		init = function(self, parser_type)
@@ -1074,9 +1074,9 @@ end
 
 local function lstringdup(lstring)
 	local len = string.len(lstring)
-	local buf = ffi.new("char[?]", len+1)
+	local buf = ffi.new("char["..len+1.."]")
 
-	ffi.copy(buf, ffi.cast("char *", lstring), len)
+	ffi.copy(buf, ffi.cast("const char *", lstring), len)
 	buf[len] = 0;
 
 	return buf, len;
